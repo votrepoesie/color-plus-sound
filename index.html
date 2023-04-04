@@ -42,13 +42,27 @@
 const box = document.getElementById('box')
 
 function changeColor (e) {
+  
+  const r = Math.random() * 255
+  const g = Math.random() * 255
+  const b = Math.random() * 255
+  const randomColor = `rgb(${r}, ${g}, ${b})`
+  
   if (e.key === '1') {
     box.style.background = 'red'
   } else if (e.key === '2') {
     box.style.background = 'blue'
   } else if (e.key === '3') {
     box.style.background = 'green'
-  } else box.style.background = 'pink'
+  } else if (e.key === '4') {
+    box.style.background = 'pink' 
+  } else if (e.key === '5') {
+    box.style.background = 'purple'
+  } else if (e.key === '6') {
+    box.style.background = 'brown'
+  } else if (e.key === '7') {
+    box.style.background = 'brown'
+  } else {box.style.background = randomColor}
 }
   
   window.addEventListener('keypress', play)
