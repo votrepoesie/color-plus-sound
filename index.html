@@ -1,26 +1,40 @@
-<div id="box"></div>
+<div id="box">
+  <div class="container">
+    <p id="replace-me"></p>
+  </div>
+</div>
 
 <style>
-  
   #box {
     position: absolute;
     background: black;
     width: 100%;
     height: 100%;
   }
-  
+
+  .container {
+    display: flex;
+  }
+
+  p {
+    color: white;
+    position: absolute;
+    z-index: 10;
+    margin: 10vw;
+    width: 80vw;
+    word-wrap: break-word;
+    font-size: 20px;
+  }
 </style>
 <script>
+  const ctx = new window.AudioContext()
 
-	const ctx = new window.AudioContext()
-  
-  function play (e) {
+  function play(e) {
     const osc = ctx.createOscillator()
-  
-    osc.type = 'square'
-  
+    osc.type = 'sine'
+
     if (e.key === '1') {
-      osc.frequency.value = 261.63  // C
+      osc.frequency.value = 261.63 // C
     } else if (e.key === '2') {
       osc.frequency.value = 293.66 // D
     } else if (e.key === '3') {
@@ -37,39 +51,41 @@
       osc.frequency.value = Math.random() * 800
     }
 
-  	osc.connect(ctx.destination)
-  osc.start(ctx.currentTime)
-  	osc.stop(ctx.currentTime + 0.25)
-  }
-  
-const box = document.getElementById('box')
+    osc.connect(ctx.destination)
+    osc.start(ctx.currentTime)
+    osc.stop(ctx.currentTime + 0.5)
 
-function changeColor (e) {
-  
-  const r = Math.random() * 255
-  const g = Math.random() * 255
-  const b = Math.random() * 255
-  const randomColor = `rgb(${r}, ${g}, ${b})`
-  box.style.transition = '0.5s'
-  
-  if (e.key === '1') {
-    box.style.background = 'red'
-  } else if (e.key === '2') {
-    box.style.background = 'blue'
-  } else if (e.key === '3') {
-    box.style.background = 'green'
-  } else if (e.key === '4') {
-    box.style.background = 'pink' 
-  } else if (e.key === '5') {
-    box.style.background = 'purple'
-  } else if (e.key === '6') {
-    box.style.background = 'brown'
-  } else if (e.key === '7') {
-    box.style.background = 'brown'
-  } else {box.style.background = randomColor}
-}
-  
+    const p = document.getElementById('replace-me')
+    if (e.key) {
+      p.innerText += Math.floor(osc.frequency.value) + '//'
+    }
+  }
+
+  function changeColor(e) {
+    const box = document.getElementById('box')
+    const randomColor1 = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
+    const randomColor2 = `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`
+    const randomGradient = `radial-gradient(circle, ${randomColor1}, ${randomColor2})`
+
+    if (e.key) {
+    //   box.style.background = 'red'
+    // } else if (e.key === '2') {
+    //   box.style.background = 'blue'
+    // } else if (e.key === '3') {
+    //   box.style.background = 'green'
+    // } else if (e.key === '4') {
+    //   box.style.background = 'pink'
+    // } else if (e.key === '5') {
+    //   box.style.background = 'purple'
+    // } else if (e.key === '6') {
+    //   box.style.background = 'brown'
+    // } else if (e.key === '7') {
+    //   box.style.background = 'brown'
+    // } else {
+      box.style.background = randomGradient
+    }
+  }
+
   window.addEventListener('keypress', play)
   window.addEventListener('keypress', changeColor)
-
 </script>
